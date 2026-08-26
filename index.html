@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amber Chang — 內容編輯 & 數位企劃作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141410;
+    --bg-alt:#0f0f0c;
+    --surface:#1c1c16;
+    --line: rgba(243,241,231,0.14);
+    --ink:#f4f1e6;
+    --ink-muted:#a7a290;
+    --now: #e6ea79;      /* NourNow accent — lime */
+    --now-ink:#14140f;
+    --space: #8c9270;    /* Human Space accent — sage/olive */
+    --space-ink:#14140f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, "Noto Sans TC", sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{ font-family:'Fraunces', "Noto Serif TC", serif; }
+
+  a{ color:inherit; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:78vh;
+    display:flex; flex-direction:column; justify-content:center;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .hero .eyebrow{
+    font-size:12.5px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--ink-muted); margin-bottom:22px;
+  }
+  .hero h1{
+    font-weight:500; font-size:clamp(42px, 8vw, 84px);
+    line-height:1.02; margin:0 0 20px; letter-spacing:-0.01em;
+  }
+  .hero h1 em{ font-style:italic; color:var(--now); }
+  .hero p{
+    max-width:560px; color:var(--ink-muted); font-size:16.5px;
+    margin:0 0 8px;
+  }
+  .hero .tags{ margin-top:30px; display:flex; gap:10px; flex-wrap:wrap; }
+  .hero .tags span{
+    font-size:12.5px; padding:7px 14px; border:1px solid var(--line);
+    border-radius:999px; color:var(--ink-muted); letter-spacing:0.03em;
+  }
+  .scroll-cue{
+    position:absolute; bottom:26px; left:28px; font-size:12px;
+    color:var(--ink-muted); letter-spacing:0.15em; text-transform:uppercase;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .section.space{ background:var(--bg-alt); }
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:48px; flex-wrap:wrap;
+  }
+  .brand-mark{
+    font-family:'Fraunces', serif; font-weight:600; font-size:15px;
+    letter-spacing:0.2em; text-transform:uppercase;
+    padding:6px 14px; border-radius:4px; display:inline-block; margin-bottom:16px;
+  }
+  .brand-mark.now{ background:var(--now); color:var(--now-ink); }
+  .brand-mark.space{ background:var(--space); color:var(--space-ink); }
+  .section-head h2{ font-size:clamp(26px,3.6vw,38px); font-weight:500; margin:0; }
+  .section-head p{ color:var(--ink-muted); max-width:420px; font-size:15px; margin:0; }
+
+  /* ---------- CARD GRID ---------- */
+  .grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  .grid.featured-first{ grid-template-columns: 1.35fr 1fr 1fr; }
+  .grid.single{ grid-template-columns: repeat(2, 1fr); max-width:720px; }
+
+  .card{
+    perspective:1600px; aspect-ratio:4/5; cursor:pointer;
+  }
+  .card-inner{
+    position:relative; width:100%; height:100%;
+    transition:transform 0.65s cubic-bezier(.2,.8,.2,1);
+    transform-style:preserve-3d;
+  }
+  .card.flipped .card-inner{ transform: rotateY(180deg); }
+
+  .card-face{
+    position:absolute; inset:0; -webkit-backface-visibility:hidden; backface-visibility:hidden;
+    border-radius:10px; overflow:hidden; border:1px solid var(--line);
+  }
+  .card-front{
+    background-size:cover; background-position:center;
+    display:flex; flex-direction:column; justify-content:flex-end;
+  }
+  .card-front::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(10,10,8,0.88) 100%);
+  }
+  .card-front .front-content{ position:relative; z-index:1; padding:18px; }
+  .card-front .cat{
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    font-weight:600; margin-bottom:8px; display:inline-block;
+  }
+  .card-front.now .cat{ color:var(--now); }
+  .card-front.space .cat{ color:var(--space); }
+  .card-front h3{
+    font-size:17px; font-weight:500; margin:0 0 4px; line-height:1.35; color:var(--ink);
+  }
+  .card-front .hint{
+    font-size:11px; color:var(--ink-muted); letter-spacing:0.06em; text-transform:uppercase;
+    margin-top:10px;
+  }
+
+  .card-back{
+    transform: rotateY(180deg);
+    background:var(--surface);
+    padding:20px; display:flex; flex-direction:column;
+  }
+  .card-back .cat{
+    font-size:11px; letter-spacing:0.12em; text-transform:uppercase; font-weight:600;
+    margin-bottom:10px;
+  }
+  .card-front.now .cat, .card-back.now .cat{ color:var(--now); }
+  .card-front.space .cat, .card-back.space .cat{ color:var(--space); }
+  .card-back h3{ font-size:15px; font-weight:500; margin:0 0 10px; line-height:1.4; }
+  .card-back .field{ font-size:12.5px; color:var(--ink-muted); margin-bottom:8px; line-height:1.55; }
+  .card-back .field b{ color:var(--ink); font-weight:600; }
+  .card-back .metrics{
+    margin-top:auto; padding-top:10px; border-top:1px solid var(--line);
+    font-size:11.5px; color:var(--ink-muted); display:flex; flex-wrap:wrap; gap:8px 14px;
+  }
+  .card-back .metrics b{ color:var(--ink); }
+  .card-back .go{
+    margin-top:12px; font-size:12px; font-weight:600; letter-spacing:0.03em;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .card-back.now .go{ color:var(--now); }
+  .card-back.space .go{ color:var(--space); }
+
+  /* Coming soon card */
+  .card.soon .card-front{
+    background:repeating-linear-gradient(135deg, #1c1c16, #1c1c16 10px, #201f18 10px, #201f18 20px);
+    justify-content:center; align-items:center; text-align:center;
+  }
+  .card.soon .card-front::after{ display:none; }
+  .card.soon .front-content{ padding:22px; }
+  .card.soon .soon-label{
+    font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--now);
+    margin-bottom:14px;
+  }
+  .card.soon h3{ font-size:19px; }
+  .card.soon .soon-sub{ font-size:12px; color:var(--ink-muted); margin-top:10px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:80px 0 60px; }
+  footer h2{ font-size:clamp(28px,4vw,44px); font-weight:500; margin:0 0 22px; max-width:600px; }
+  .ig-buttons{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:48px; }
+  .ig-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 22px; border-radius:999px; text-decoration:none;
+    font-size:14px; font-weight:600; letter-spacing:0.02em;
+    border:1px solid var(--line);
+  }
+  .ig-btn.now{ background:var(--now); color:var(--now-ink); border-color:var(--now); }
+  .ig-btn.space{ background:transparent; color:var(--ink); }
+  .ig-btn.space:hover{ background:var(--space); color:var(--space-ink); border-color:var(--space); }
+  .ig-btn .arrow{ transition:transform 0.2s; }
+  .ig-btn:hover .arrow{ transform:translateX(3px); }
+  .contact{ color:var(--ink-muted); font-size:14px; border-top:1px solid var(--line); padding-top:28px; }
+  .contact a{ color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+
+  @media (max-width: 860px){
+    .grid, .grid.featured-first, .grid.single{ grid-template-columns:1fr 1fr; }
+    .card{ aspect-ratio:3/4; }
+  }
+  @media (max-width: 560px){
+    .grid, .grid.featured-first, .grid.single{ grid-template-columns:1fr; }
+    .section{ padding:64px 0; }
+    .hero{ min-height:70vh; }
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero wrap">
+    <div class="eyebrow">Amber Chang · Editorial &amp; Content Planning</div>
+    <h1>把龐雜的研究，<br>寫成有人願意讀完的<em>科普內容</em>。</h1>
+    <p>10 年品牌與內容經驗，近年專注於健康、心理健康主題的數位內容企劃與編輯——從研究資料裡拉出主軸，到完稿上線的全流程。</p>
+    <div class="tags">
+      <span>內容架構規劃</span>
+      <span>科普／衛教編輯</span>
+      <span>人物專訪</span>
+      <span>社群內容策略</span>
+    </div>
+    <div class="scroll-cue">Scroll ↓</div>
+  </section>
+
+  <!-- ================= NOURNOW ================= -->
+  <section class="section" id="nournow">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="brand-mark now">NourNow</span>
+          <h2>健康科普媒體</h2>
+        </div>
+        <p>Chinese-language health media，鎖定亞洲年輕讀者，將營養科學、腦神經科學、心理健康等研究，轉譯為好讀好懂的內容。</p>
+      </div>
+
+      <div class="grid featured-first">
+
+        <!-- Leaf Yeh interview - featured -->
+        <div class="card" data-card>
+          <div class="card-inner">
+            <div class="card-face card-front now" style="background-image:url('assets/leaf-yeh.jpg')">
+              <div class="front-content">
+                <span class="cat">Issue · 人物專訪</span>
+                <h3>治癒慌亂世代的創作歌手——葉穎</h3>
+                <div class="hint">點擊查看企劃筆記 →</div>
+              </div>
+            </div>
+            <div class="card-face card-back now">
+              <span class="cat">Issue · 人物專訪</span>
+              <h3>「生命倒數時，日子更清醒」</h3>
+              <div class="field"><b>原始素材：</b>葉穎新專輯的創作故事與訪談內容</div>
+              <div class="field"><b>企劃主軸：</b>從「生命倒數的清醒感」切入，將她面對死亡與重生的生命經驗，轉化為慌亂世代讀者能共感的創作故事</div>
+              <div class="field"><b>產出：</b>採訪整理、逐字稿摘要、內文撰寫與下標，帶出「夢」作為她創作核心靈感的敘事線</div>
+              <div class="metrics">
+                <span>觸及 <b>5萬</b></span><span>讚 <b>1,914</b></span><span>轉發 <b>177</b></span><span>收藏 <b>227</b></span>
+              </div>
+              <a class="go" href="https://www.instagram.com/p/DYv1ipsDxNz/" target="_blank" rel="noopener">查看貼文 ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Snoopy -->
+        <div class="card" data-card>
+          <div class="card-inner">
+            <div class="card-face card-front now" style="background-image:url('assets/snoopy.jpg')">
+              <div class="front-content">
+                <span class="cat">Lifestyle</span>
+                <h3>史努比身上真的帶有「快樂基因」</h3>
+                <div class="hint">點擊查看企劃筆記 →</div>
+              </div>
+            </div>
+            <div class="card-face card-back now">
+              <span class="cat">Lifestyle</span>
+              <h3>研究發現：快樂基因</h3>
+              <div class="field"><b>原始素材：</b>漫畫療癒大腦的相關科學研究，分散於多篇論文與科普報導</div>
+              <div class="field"><b>企劃主軸：</b>拉出「熟悉角色帶來安全感」與「幽默降低壓力荷爾蒙」兩條線，用讀者熟悉的史努比降低科學內容的距離感</div>
+              <div class="field"><b>產出：</b>生活化語言重寫學術發現，維持社群閱讀節奏與親近口吻</div>
+              <div class="metrics">
+                <span>觸及 <b>13.5萬</b></span><span>讚 <b>6,000</b></span><span>轉發 <b>3,280</b></span><span>收藏 <b>1,330</b></span>
+              </div>
+              <a class="go" href="https://www.instagram.com/p/DPserd8D2on/" target="_blank" rel="noopener">查看貼文 ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Harvard brain -->
+        <div class="card" data-card>
+          <div class="card-inner">
+            <div class="card-face card-front now" style="background-image:url('assets/brain-recharge.jpg')">
+              <div class="front-content">
+                <span class="cat">Think</span>
+                <h3>情緒憂鬱可能是「大腦電量不足」</h3>
+                <div class="hint">點擊查看企劃筆記 →</div>
+              </div>
+            </div>
+            <div class="card-face card-back now">
+              <span class="cat">Think</span>
+              <h3>哈佛新發現：大腦電量不足</h3>
+              <div class="field"><b>原始素材：</b>哈佛大學最新腦科學研究，原始論述偏學術語言</div>
+              <div class="field"><b>企劃主軸：</b>將「情緒修補」到「重啟能量」的典範轉移，重組成讀者容易跟隨的因果順序</div>
+              <div class="field"><b>產出：</b>研究語言轉譯為生活化比喻，維持論述正確性與可信度</div>
+              <div class="metrics">
+                <span>觸及 <b>10萬</b></span><span>讚 <b>3,887</b></span><span>轉發 <b>1,865</b></span><span>收藏 <b>1,871</b></span>
+              </div>
+              <a class="go" href="https://www.instagram.com/p/DQqRxTQD7Vq/" target="_blank" rel="noopener">查看貼文 ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bilingual brain -->
+        <div class="card" data-card>
+          <div class="card-inner">
+            <div class="card-face card-front now" style="background-image:url('assets/bilingual-brain.jpg')">
+              <div class="front-content">
+                <span class="cat">News</span>
+                <h3>雙母語人士，大腦真的比較「年輕」嗎？</h3>
+                <div class="hint">點擊查看企劃筆記 →</div>
+              </div>
+            </div>
+            <div class="card-face card-back now">
+              <span class="cat">News</span>
+              <h3>多語言與大腦老化</h3>
+              <div class="field"><b>原始素材：</b>多語言能力與大腦老化的相關研究報告</div>
+              <div class="field"><b>企劃主軸：</b>從「雙母語是否讓大腦更年輕」的提問切入，把研究整理成與日常生活相關的健康提醒</div>
+              <div class="field"><b>產出：</b>口語提問式標題降低距離感，同時維持研究論述正確性</div>
+              <div class="metrics">
+                <span>觸及 <b>5萬</b></span><span>讚 <b>3,027</b></span><span>轉發 <b>2,089</b></span><span>收藏 <b>1,021</b></span>
+              </div>
+              <a class="go" href="https://www.instagram.com/p/DawlTICj95E/" target="_blank" rel="noopener">查看貼文 ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coming Sept -->
+        <div class="card soon">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="front-content">
+                <div class="soon-label">Coming — Sept 2026</div>
+                <h3 class="serif">大腦的時間差</h3>
+                <div class="soon-sub">9 月封面故事・專訪腦影像學者曾文毅博士<br>敬請期待</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HUMAN SPACE ================= -->
+  <section class="section space" id="humanspace">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="brand-mark space">Human Space</span>
+          <h2>大人的童書・心理健康內容</h2>
+        </div>
+        <p>以「大人也需要一本情緒繪本」為主軸，將心理學研究與生活觀察，轉化為淺顯易懂的科普內容。</p>
+      </div>
+
+      <div class="grid single">
+        <div class="card" data-card>
+          <div class="card-inner">
+            <div class="card-face card-front space" style="background-image:url('assets/chat-selfcare.jpg')">
+              <div class="front-content">
+                <span class="cat">Wellness Fact</span>
+                <h3>原來聊天也是一種心理健康習慣</h3>
+                <div class="hint">點擊查看企劃筆記 →</div>
+              </div>
+            </div>
+            <div class="card-face card-back space">
+              <span class="cat">Wellness Fact</span>
+              <h3>生活冷知識：聊天即自我照顧</h3>
+              <div class="field"><b>原始素材：</b>世界健康協會年度趨勢報告，原始資料偏正式論述</div>
+              <div class="field"><b>企劃主軸：</b>拉出「歸屬感與長壽同為健康趨勢核心」的主軸，連結人際互動、社會參與與身心健康的研究</div>
+              <div class="field"><b>產出：</b>以「生活冷知識」輕鬆切角包裝研究內容，兼顧科學根據與可讀性</div>
+              <div class="metrics">
+                <span>觸及 <b>8.9萬</b></span><span>讚 <b>3,231</b></span><span>轉發 <b>1,740</b></span><span>收藏 <b>1,031</b></span>
+              </div>
+              <a class="go" href="https://www.instagram.com/p/Da4oTr5khiJ/" target="_blank" rel="noopener">查看貼文 ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="wrap">
+    <h2>更多優質內容，前往 IG 查看。</h2>
+    <div class="ig-buttons">
+      <a class="ig-btn now" href="https://www.instagram.com/bynournow" target="_blank" rel="noopener">
+        NourNow @bynournow <span class="arrow">→</span>
+      </a>
+      <a class="ig-btn space" href="https://www.instagram.com/humanspace____" target="_blank" rel="noopener">
+        Human Space @humanspace____ <span class="arrow">→</span>
+      </a>
+    </div>
+    <div class="contact">
+      Amber Chang　|　itsamberchang@gmail.com　|　<a href="https://amberbeerr.github.io/Portfolio/" target="_blank" rel="noopener">品牌與行銷作品集</a>
+    </div>
+  </footer>
+
+<script>
+  document.querySelectorAll('[data-card]').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if (e.target.closest('a')) return;
+      card.classList.toggle('flipped');
+    });
+  });
+</script>
+</body>
+</html>
